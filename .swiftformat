@@ -1,0 +1,167 @@
+--exclude tools,Pods,fastlane,**/Generated
+# Excludes specific directories and files from formatting.
+
+--acronyms ID,URL,UUID
+# Treats ID, URL, and UUID as acronyms in case conversion.
+
+--assetliterals visual-width
+# Formats asset literals to visual width.
+
+--asynccapturing
+# Formats async capturing closures.
+
+--beforemarks
+# Ensures a blank line exists before mark comments.
+
+--closurevoid remove
+# Removes explicit 'Void' return type in closures.
+
+--commas inline
+# Keeps commas inline with the previous item.
+
+--conflictmarkers reject
+# Rejects any formatting changes that would conflict with SCM conflict markers.
+
+--decimalgrouping 3,4
+# Groups decimal numbers in 3 and 4 digits.
+
+--elseposition same-line
+# Places 'else' on the same line as the closing brace of the preceding block.
+
+--emptybraces no-space
+# Formats empty braces without spaces.
+
+--enumnamespaces always
+# Always uses enum namespaces.
+
+--exponentcase lowercase
+# Formats exponent literals in lowercase.
+
+--fragment false
+# Disallows formatting code fragments (must be whole files).
+
+--funcattributes preserve
+# Preserves function attributes position.
+
+--generictypes
+# Formats generic types.
+
+--header strip
+# Strips header comments.
+
+--ifdef no-indent
+# Does not indent code wrapped in #if/#endif directives.
+
+--importgrouping testable-bottom
+# Groups @testable imports at the bottom.
+
+--indent 4
+# Sets indent width to 4 spaces.
+
+--indentcase false
+# Does not indent case statements inside switch.
+
+--indentstrings true
+# Indents multiline string literals.
+
+--lifecycle
+# Formats lifecycle methods in a specific order.
+
+--lineaftermarks true
+# Ensures there is a line after mark comments.
+
+--markextensions always
+# Always marks extension blocks.
+
+--marktypes always
+# Always marks type declarations.
+
+--maxwidth none
+# Does not enforce a maximum line width.
+
+--modifierorder
+# Formats declaration modifiers in a specific order.
+
+--nospaceoperators ...,..<
+# Formats range operators without spaces.
+
+--patternlet hoist
+# Hoists 'let' out of patterns.
+
+--ranges spaced
+# Formats ranges with spaces.
+
+--redundanttype infer-locals-only
+# Infers redundant types for local variables only.
+
+--self remove
+# Removes 'self.' except in init methods.
+
+--semicolons inline
+# Allows inline semicolons.
+
+--shortoptionals always
+# Uses short syntax for optionals where possible.
+
+--smarttabs enabled
+# Enables smart tabs for indenting.
+
+--someany true
+# Uses 'some' and 'any' where appropriate.
+
+--stripunusedargs closure-only
+# Strips unused arguments in closures only.
+
+--structthreshold 0
+# No threshold for splitting struct definitions onto multiple lines.
+
+--tabwidth unspecified
+# Does not specify tab width (uses default).
+
+--trimwhitespace always
+# Trims trailing whitespace always.
+
+--typeattributes preserve
+# Preserves type attributes position.
+
+--typeblanklines remove
+# Removes blank lines between type declarations.
+
+--varattributes preserve
+# Preserves variable attributes position.
+
+--voidtype void
+# Uses 'Void' for empty argument lists and return types.
+
+--wraparguments preserve
+# Preserves the existing argument wrapping style.
+
+--wrapcollections before-first
+# Wraps collections before the first item.
+
+--wrapconditions preserve
+# Preserves the existing condition wrapping style.
+
+--wrapeffects preserve
+# Preserves the existing effect (try, await, etc.) wrapping style.
+
+--wrapenumcases always
+# Always wraps enum cases.
+
+--wrapparameters before-first
+# Wraps function parameters before the first parameter.
+
+--wrapreturntype preserve
+# Preserves the existing return type wrapping style.
+
+--wrapternary default
+# Uses the default style for wrapping ternary operators.
+
+--wraptypealiases preserve
+# Preserves the existing typealias wrapping style.
+
+--xcodeindentation disabled
+--yodaswap always
+--swiftversion 5.9
+
+--disable sortImports, blankLinesAtStartOfScope, blankLinesAroundMark, wrapMultilineStatementBraces
