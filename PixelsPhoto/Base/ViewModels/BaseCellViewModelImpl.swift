@@ -2,11 +2,13 @@ import UIKit
 import Combine
 
 open class BaseCellViewModelImpl: Hashable, BaseCellViewModelProtocol, BaseCellConfigrator {
-    public var cellCreator: CellCreator
+    public var cellCreator: any CellCreator
     @Published public var isSkeleton = false
-    public let uuid = UUID()
+    public var uuid: String {
+        UUID().uuidString
+    }
 
-    public init(cellCreator: CellCreator) {
+    public init(cellCreator: any CellCreator) {
         self.cellCreator = cellCreator
         cellCreator.viewModel = self
     }

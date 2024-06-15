@@ -1,6 +1,7 @@
 import UIKit
 
-public class GenericCellCreator<Cell: BaseConfigurableCell>: CellCreator {
+public class GenericCellCreator<Cell: BaseConfigurableCell, ViewModel: BaseCellViewModelImpl>: CellCreator where ViewModel == Cell.ViewModel {
+
     public weak var viewModel: BaseCellViewModelImpl?
     private var customConfiguration: ((Cell?) -> Void)?
     private var cellRegistrator: GenericCellRegistrator<Cell>
@@ -13,7 +14,7 @@ public class GenericCellCreator<Cell: BaseConfigurableCell>: CellCreator {
         cellRegistrator.registerCells(in: collectionView)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier,
                                                       for: indexPath) as? Cell
-        if let viewModel {
+        if let viewModel = viewModel as? ViewModel {
             cell?.configure(with: viewModel)
         }
         customConfiguration?(cell)

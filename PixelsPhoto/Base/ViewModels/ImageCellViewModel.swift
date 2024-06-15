@@ -5,6 +5,10 @@ import Kingfisher
 open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
     @Published public var image: UIImage?
     @Published public var didImageLoading = false
+    override public var uuid: String {
+        imageURL ?? UUID().uuidString
+    }
+
     public var imageURL: String? {
         didSet {
             loadImage()
@@ -15,7 +19,7 @@ open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
 
     private var imageDownloadTask: DownloadTask?
 
-    override public init(cellCreator: CellCreator) {
+    override public init(cellCreator: any CellCreator) {
         super.init(cellCreator: cellCreator)
         loadImage()
     }

@@ -1,10 +1,11 @@
 import UIKit
 import SnapKit
 
-class PhotosFeed: GenericCollectionViewController<PhotosFeedViewModel> {
+class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewModel> {
 
     override func loadView() {
         super.loadView()
+        view.backgroundColor = .white
         view.addSubview(collectionView)
     }
 

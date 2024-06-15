@@ -1,6 +1,6 @@
 import Foundation
 
 public protocol Configurable: AnyObject {
-
-    func configure(with viewModel: BaseCellViewModelImpl)
+    associatedtype ViewModel = BaseCellViewModelImpl
+    func configure(with viewModel: ViewModel)
 }

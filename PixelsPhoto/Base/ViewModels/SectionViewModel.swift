@@ -1,6 +1,26 @@
 import UIKit
 import Combine
 
+protocol CustomSectionViewModelProtocol: SectionViewModel {
+    associatedtype SectionType: SectionLayoutType
+    var sectionType: SectionType { get set }
+    init(sectionType: SectionType)
+}
+
+class CustomSectionViewModel<T: SectionLayoutType>: SectionViewModel, CustomSectionViewModelProtocol {
+    var sectionType: T
+
+    required init(sectionType: T) {
+        self.sectionType = sectionType
+        super.init()
+        title = sectionType.title
+    }
+
+    override func copy() -> SectionViewModel {
+        Self(sectionType: sectionType)
+    }
+}
+
 open class SectionViewModel: Hashable, ObservableObject {
     private(set) var uuid = UUID()
     public var title: String?

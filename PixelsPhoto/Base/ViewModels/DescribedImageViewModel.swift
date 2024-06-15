@@ -13,7 +13,7 @@ open class DescribedImageViewModel: BaseCellViewModelImpl {
 
     public var description: String
 
-    public init(description: String, cellCreator: CellCreator) {
+    public init(description: String, cellCreator: any CellCreator) {
         self.description = description
 
         super.init(cellCreator: cellCreator)
