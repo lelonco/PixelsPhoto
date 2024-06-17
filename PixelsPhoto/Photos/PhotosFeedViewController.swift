@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import GenericCollection
 
 class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewModel> {
 

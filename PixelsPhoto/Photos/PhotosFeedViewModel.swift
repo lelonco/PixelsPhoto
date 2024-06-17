@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import GenericCollection
 
 class PhotosFeedViewModel: BaseCollectionViewViewModel {
     @Published private var sections: [CustomSectionViewModel<PhotosFeedSection>] = []

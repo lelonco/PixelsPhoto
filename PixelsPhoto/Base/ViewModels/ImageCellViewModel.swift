@@ -1,6 +1,7 @@
 import Combine
 import UIKit.UIImage
 import Kingfisher
+import GenericCollection
 
 open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
     @Published public var image: UIImage?

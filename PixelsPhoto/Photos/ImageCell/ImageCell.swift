@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import GenericCollection
 
 class ImageCell: UICollectionViewCell, BaseConfigurableCell {
     typealias ViewModel = PhotoImageViewModel

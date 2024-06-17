@@ -1,4 +1,5 @@
 import Foundation
+import GenericCollection
 
 class PhotoImageViewModel: ImageCellViewModel {
 

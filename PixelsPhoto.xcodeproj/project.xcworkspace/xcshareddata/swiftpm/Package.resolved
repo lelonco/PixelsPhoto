@@ -1,6 +1,15 @@
 {
-  "originHash" : "c16c4f56f5cabbe8362acd44295c7994f3fde6f6be89cc1939a2474642f111af",
+  "originHash" : "df7720b88909ab4d2209fb08b8e70dea4476ad88bf1fe44ffeb05b4ffe9e899e",
   "pins" : [
+    {
+      "identity" : "genericcollection",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lelonco/GenericCollection.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "8b9a1eb6677beb8e3c8dfaa628d5ea56a9499cc4"
+      }
+    },
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
