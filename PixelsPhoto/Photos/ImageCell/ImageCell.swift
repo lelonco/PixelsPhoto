@@ -2,7 +2,7 @@ import UIKit
 import Combine
 import GenericCollection
 
-class ImageCell: UICollectionViewCell, BaseConfigurableCell {
+class ImageCell: UICollectionViewCell, ConfigurableCell {
     typealias ViewModel = PhotoImageViewModel
     private var cancellable = Set<AnyCancellable>()
     var cellViewModel: ViewModel?
