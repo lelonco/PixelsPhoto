@@ -13,6 +13,7 @@ class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewMo
     override func viewDidLoad() {
         super.viewDidLoad()
         setupConstraints()
+        collectionView.prefetchDataSource = self
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -29,5 +30,11 @@ class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewMo
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+}
+
+extension PhotosFeedViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        viewModel.prefetchItemsAt(indexPaths: indexPaths)
     }
 }

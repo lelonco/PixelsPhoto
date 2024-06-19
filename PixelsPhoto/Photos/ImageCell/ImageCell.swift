@@ -47,6 +47,7 @@ class ImageContainer: UIView {
     }
 
     private func setupBindings(viewModel: PhotoImageViewModel) {
+        cancellable.forEach { $0.cancel() }
         viewModel.$image
             .sink { [unowned self] image in
                 guard let image else { return }
