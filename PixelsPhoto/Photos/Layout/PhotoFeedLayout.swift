@@ -50,7 +50,7 @@ private extension PhotoFeedLayout {
             if UIDevice.isPad {
                 6
             } else {
-                3
+                UIDevice.current.orientation.isLandscape ? 4 : 3
             }
         }
 

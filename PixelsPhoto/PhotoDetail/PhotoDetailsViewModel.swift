@@ -5,10 +5,11 @@ import UIKit
 class PhotoDetailsViewModel: BaseCollectionViewViewModel {
 
     var cancellable = Set<AnyCancellable>()
+    weak var coordinator: PhotoDetailsCoordinator?
 
     private var predefinedSections: [PhotoDetailsSections] = [.header, .info, .related]
     @Published private var sections: [CustomSectionViewModel<PhotoDetailsSections>] = []
-
+    var reloadData = PassthroughSubject<Void, Never>()
     var sectionPublisher: AnyPublisher<[SectionViewModel], Never> {
         $sections
             .map { sections in
@@ -20,10 +21,11 @@ class PhotoDetailsViewModel: BaseCollectionViewViewModel {
     private let photo: Photo
     private let page: PexelsResponse
     private let preloadedPhoto: UIImage?
-    init(photo: Photo, page: PexelsResponse, preloadedPhoto: UIImage?) {
+    init(photo: Photo, page: PexelsResponse, preloadedPhoto: UIImage?, coordinator: PhotoDetailsCoordinator? = nil) {
         self.photo = photo
         self.page = page
         self.preloadedPhoto = preloadedPhoto
+        self.coordinator = coordinator
         setupSections()
     }
 
@@ -35,9 +37,28 @@ class PhotoDetailsViewModel: BaseCollectionViewViewModel {
         //
     }
 
+    func didDisappear() {
+        coordinator?.didDisappear()
+    }
+
+    func invalidateLayouts() {
+        for section in sections {
+            section.layout = section.sectionType.layout
+        }
+    }
+
     func didSelect(at indexPath: IndexPath) {
         guard sections[indexPath.section].sectionType == .related else { return }
-        // Move to related photo
+        let section = sections[indexPath.section]
+        guard let item = section.items[indexPath.item] as? PhotoImageViewModel else { return }
+        coordinator?.openDetails(for: item)
+    }
+}
+
+extension PhotoDetailsViewModel: PhotoDetailsHeaderDelegate {
+    func didUpdatedConstraints() {
+        // to reload data
+        reloadData.send(())
     }
 }
 
@@ -68,21 +89,33 @@ private extension PhotoDetailsViewModel {
     func fillRelated(section: CustomSectionViewModel<PhotoDetailsSections>) {
         guard section.sectionType == .related else { return }
         let photos = page.photos.filter { $0.id != photo.id }
-        section.items = photos.map { PhotoImageViewModel(model: $0, cellCreator: ImageCell.cellCreator) }
+        section.items = photos.map { PhotoImageViewModel(model: $0, relatesTo: page, cellCreator: ImageCell.cellCreator) }
 
         addSection(section: section)
     }
 
     func fillHeader(section: CustomSectionViewModel<PhotoDetailsSections>) {
         guard section.sectionType == .header else { return }
-        section.items = [PhotoDetailsHeaderViewModel(photo: photo, image: preloadedPhoto, cellCreator: DetailsHeaderCell.cellCreator)]
+        let header = PhotoDetailsHeaderViewModel(photo: photo, image: preloadedPhoto, cellCreator: DetailsHeaderCell.cellCreator)
+        header.delegate = self
+        section.items = [header]
 
         addSection(section: section)
     }
 
     func addSection(section: CustomSectionViewModel<PhotoDetailsSections>) {
-        guard !sections.contains(section) else { return }
+        guard !sections.contains(section) else {
+            return
+        }
         sections.append(section)
+    }
+
+    // We need this function to triger the update of the section
+    func replaceSection(section: CustomSectionViewModel<PhotoDetailsSections>) {
+        guard let index = sections.firstIndex(where: { $0.sectionType == section.sectionType }) else {
+            return
+        }
+        sections[index] = section
     }
 
     func fillSections() {
@@ -115,7 +148,7 @@ private extension PhotoDetailsViewModel {
             switch self {
             case .header: PhotoDetailsHeaderLayout()
             case .info: PhotoDetailsHeaderLayout()
-            case .related: PhotoDetailsHeaderLayout()
+            case .related: PhotoFeedLayout()
             }
         }
     }

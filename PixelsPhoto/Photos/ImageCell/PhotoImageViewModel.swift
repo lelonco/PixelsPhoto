@@ -7,13 +7,17 @@ class PhotoImageViewModel: ImageCellViewModel {
         model.id.description
     }
 
-    private let model: Photo
+    let page: PexelsResponse
+    let model: Photo
     public var authorName: String
     public var altName: String
-    init(model: Photo, cellCreator: any CellCreator) {
+    public var avgColor: String
+    init(model: Photo, relatesTo: PexelsResponse, cellCreator: any CellCreator) {
         self.model = model
         authorName = model.photographer
         altName = model.alt
+        avgColor = model.avgColor
+        page = relatesTo
         super.init(cellCreator: cellCreator)
         imageURL = model.src.portrait
     }

@@ -11,6 +11,7 @@ class DetailsHeaderCell: UICollectionViewCell, BaseConfigurableCell {
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -26,13 +27,16 @@ class DetailsHeaderCell: UICollectionViewCell, BaseConfigurableCell {
     }
 
     func configure(with viewModel: PhotoDetailsHeaderViewModel) {
-        if let image = viewModel.bluredImage {
+        cellViewModel = viewModel
+        if let image = viewModel.image ?? viewModel.bluredImage {
             photoImageView.image = image
         }
+        updateToFit(with: viewModel)
         bindToViewModel(viewModel: viewModel)
     }
 
     private func bindToViewModel(viewModel: PhotoDetailsHeaderViewModel) {
+        cancellable.forEach { $0.cancel() }
         viewModel.$image
             .sink { [unowned self] image in
                 guard let image else { return }
@@ -41,9 +45,15 @@ class DetailsHeaderCell: UICollectionViewCell, BaseConfigurableCell {
             .store(in: &cancellable)
     }
 
+    private func updateToFit(with viewModel: PhotoDetailsHeaderViewModel) {
+        photoImageView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(photoImageView.snp.width).multipliedBy(viewModel.height / viewModel.width)
+        }
+    }
+
     private func setupConstraints() {
-        // Add constraints
-        photoImageView.snp.makeConstraints { make in
+        photoImageView.snp.remakeConstraints { make in
             make.edges.equalToSuperview()
         }
     }

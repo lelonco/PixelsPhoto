@@ -3,6 +3,7 @@ import Combine
 import GenericCollection
 
 class PhotosFeedViewModel: BaseCollectionViewViewModel {
+    weak var coordinator: PhotosFeedCoordinator?
     @Published private var sections: [CustomSectionViewModel<PhotosFeedSection>] = []
     var sectionPublisher: AnyPublisher<[SectionViewModel], Never> {
         $sections
@@ -37,9 +38,15 @@ class PhotosFeedViewModel: BaseCollectionViewViewModel {
         let section = CustomSectionViewModel<PhotosFeedSection>(sectionType: .feed)
         section.layout = PhotosFeedSection.feed.layout
         section.items = data.photos.map {
-            PhotoImageViewModel(model: $0, cellCreator: ImageCell.cellCreator)
+            PhotoImageViewModel(model: $0, relatesTo: data, cellCreator: ImageCell.cellCreator)
         }
         sections = [section]
+    }
+
+    func invalidateLayouts() {
+        for section in sections {
+            section.layout = section.sectionType.layout
+        }
     }
 
     func layoutType(for indexPath: IndexPath) -> NSCollectionLayoutSection? {
@@ -51,7 +58,10 @@ class PhotosFeedViewModel: BaseCollectionViewViewModel {
     }
 
     func didSelect(at indexPath: IndexPath) {
-        //
+        let section = sections[indexPath.section]
+        let item = section.items[indexPath.item]
+        guard let photo = item as? PhotoImageViewModel else { return }
+        coordinator?.openDetails(for: photo)
     }
 }
 

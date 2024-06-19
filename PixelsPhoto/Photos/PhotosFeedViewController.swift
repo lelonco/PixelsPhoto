@@ -15,6 +15,12 @@ class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewMo
         setupConstraints()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        viewModel.invalidateLayouts()
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+
     override func registerHeader(for dataSource: UICollectionViewDiffableDataSource<SectionViewModel, BaseCellViewModelImpl>) {
         //
     }
