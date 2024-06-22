@@ -40,6 +40,7 @@
 		C4BED0E42C224C4C00AC6943 /* DetailsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BED0E32C224C4C00AC6943 /* DetailsInfoView.swift */; };
 		C4BED0E72C22557100AC6943 /* WrapedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BED0E62C22557100AC6943 /* WrapedView.swift */; };
 		C4BED0E92C22578500AC6943 /* PhotoDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BED0E82C22578500AC6943 /* PhotoDetailsCoordinator.swift */; };
+		C4FE81442C2713E700CA6A36 /* ImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE81432C2713E700CA6A36 /* ImageContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		C4BED0E32C224C4C00AC6943 /* DetailsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoView.swift; sourceTree = "<group>"; };
 		C4BED0E62C22557100AC6943 /* WrapedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapedView.swift; sourceTree = "<group>"; };
 		C4BED0E82C22578500AC6943 /* PhotoDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsCoordinator.swift; sourceTree = "<group>"; };
+		C4FE81432C2713E700CA6A36 /* ImageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			children = (
 				C4BED0B32C1E1C6200AC6943 /* ImageCell.swift */,
 				C4BED0B52C1E23EE00AC6943 /* PhotoImageViewModel.swift */,
+				C4FE81432C2713E700CA6A36 /* ImageContainer.swift */,
 			);
 			path = ImageCell;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				C4BED0D82C20BCA000AC6943 /* PhotoDetailsInfoCell.swift in Sources */,
 				C4BED0BB2C1E274800AC6943 /* PhotoFeedLayout.swift in Sources */,
 				C4BED0132C1C8A7700AC6943 /* AppDelegate.swift in Sources */,
+				C4FE81442C2713E700CA6A36 /* ImageContainer.swift in Sources */,
 				C4BED0E02C21F5E300AC6943 /* PhotosFeedCoordinator.swift in Sources */,
 				C4BED0E22C21FB4600AC6943 /* Extensions.swift in Sources */,
 				C4BED0152C1C8A7700AC6943 /* SceneDelegate.swift in Sources */,

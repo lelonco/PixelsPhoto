@@ -24,17 +24,6 @@ class PhotosFeedViewModel: BaseCollectionViewViewModel {
         getData(currentPage: currentPage, perPage: perPage)
     }
 
-    private func getData(currentPage: Int, perPage: Int) {
-        Task {
-            do {
-                let data = try await networkService.getCurated(page: currentPage, perPage: perPage)
-                fill(using: data)
-            } catch {
-                print(error)
-            }
-        }
-    }
-
     private func fill(using data: PexelsResponse) {
         pages.append(data)
         isLoading = false
@@ -82,24 +71,41 @@ class PhotosFeedViewModel: BaseCollectionViewViewModel {
         guard !isLoading else { return }
         isLoading = true
         currentPage += 1
-        print(#function)
         getData(currentPage: currentPage, perPage: perPage)
     }
 
+    private func getData(currentPage: Int, perPage: Int) {
+        Task {
+            await self.asyncGetData(currentPage: currentPage, perPage: perPage)
+        }
+    }
+
+    func asyncGetData(currentPage: Int, perPage: Int) async {
+        do {
+            let data = try await networkService.getCurated(page: currentPage, perPage: perPage)
+            fill(using: data)
+        } catch {
+
+            let retry = await coordinator?.showError(error: error) ?? false
+            if retry {
+                await asyncGetData(currentPage: currentPage, perPage: perPage)
+            }
+        }
+    }
+
+    func reloadData() async {
+        pages = []
+        sections = []
+        await asyncGetData(currentPage: 0, perPage: perPage)
+    }
+
     func prefetchItemsAt(indexPaths: [IndexPath]) {
-        print(#function, indexPaths.map(\.item).sorted())
         let itemIndices = indexPaths.map(\.item).sorted()
         guard let sectionItemsCount = sections.first?.items.count,
               let greatesIndex = itemIndices.last,
               (sectionItemsCount - 1) <= greatesIndex else { return }
 
         loadMore()
-        // for indexPath in indexPaths {
-        //     let section = sections[indexPath.section]
-        //     let item = section.items[indexPath.item]
-        //     guard let photo = item as? PhotoImageViewModel else { return }
-        //     photo.prefetch()
-        // }
     }
 }
 

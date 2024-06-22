@@ -20,8 +20,8 @@ struct DetailsInfoView: View {
             .frame(alignment: .topLeading)
             Spacer()
             PhotoDemantions(viewModel: viewModel)
-                .aspectRatio(16 / 9, contentMode: .fit)
-                .frame(width: 100, alignment: .topTrailing)
+                .aspectRatio(CGFloat(viewModel.width) / CGFloat(viewModel.height), contentMode: .fit)
+                .frame(height: 100, alignment: .topTrailing)
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
     }

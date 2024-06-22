@@ -16,8 +16,6 @@ open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
         }
     }
 
-    public var loadingFinished = false
-
     private var imageDownloadTask: DownloadTask?
 
     override public init(cellCreator: any CellCreator) {
@@ -42,9 +40,7 @@ open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
             switch result {
             case let .success(value):
                 self.image = value.image
-                self.didImageLoading = false
             case .failure:
-                self.didImageLoading = self.image == nil
                 self.cancelDownloadTask()
             }
         }
@@ -53,6 +49,5 @@ open class ImageCellViewModel: BaseCellViewModelImpl, ObservableObject {
     public func cancelDownloadTask() {
         imageDownloadTask?.cancel()
         imageDownloadTask = nil
-        didImageLoading = false
     }
 }

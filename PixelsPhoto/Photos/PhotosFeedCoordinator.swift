@@ -27,6 +27,22 @@ class PhotosFeedCoordinator: NSObject, Coordinator {
         return vc
     }
 
+    @MainActor
+    func showError(error: Error) async -> Bool {
+        await withCheckedContinuation { continuation in
+            let alert = UIAlertController(title: "Opps", message: "Something went wrong", preferredStyle: .alert)
+            alert.addAction(.init(title: "Retry", style: .default, handler: { _ in
+                continuation.resume(returning: true)
+            }))
+            alert.addAction(.init(title: "Cancel", style: .destructive, handler: { _ in
+                continuation.resume(returning: false)
+            }))
+            DispatchQueue.main.async {
+                self.navigationController.present(alert, animated: true)
+            }
+        }
+    }
+
     func openDetails(for photo: PhotoImageViewModel) {
         let coordinator = PhotoDetailsCoordinator(navigationController: navigationController, photo: photo, parrent: self)
         coordinator.start(animated: true)

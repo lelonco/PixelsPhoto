@@ -3,6 +3,7 @@ import SnapKit
 import GenericCollection
 
 class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewModel> {
+    private let refreshControl = UIRefreshControl()
 
     override func loadView() {
         super.loadView()
@@ -14,6 +15,7 @@ class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewMo
         super.viewDidLoad()
         setupConstraints()
         collectionView.prefetchDataSource = self
+        setupPullToRefresh()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -26,9 +28,28 @@ class PhotosFeedViewController: GenericCollectionViewController<PhotosFeedViewMo
         //
     }
 
+    private func setupPullToRefresh() {
+        collectionView.alwaysBounceVertical = true
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+    }
+
     func setupConstraints() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+    }
+
+    @objc
+    private func refreshData(_ sender: UIRefreshControl) {
+        // Implement your data fetching logic here
+        // For example, you might want to call viewModel.fetchLatestPhotos()
+
+        Task { [unowned self] in
+            await viewModel.reloadData()
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
         }
     }
 }
